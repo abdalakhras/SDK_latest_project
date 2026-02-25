@@ -197,7 +197,7 @@ function AdminProducts() {
                   {product.name}
                 </TableCell>
                 <TableCell align="right">{product.discription}</TableCell>
-                <TableCell align="right">{product.category}</TableCell>
+                <TableCell align="right">{product.category?.name || "no category"}</TableCell>
                 <TableCell align="right">{product.price} $</TableCell>
                 <TableCell align="right">
                   <img

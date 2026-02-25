@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const productSchema = new mongoose.Schema({
     name:{type:String,required:true},
     discription:{type:String,required:true},
-    category:{type:String,required:true},
+    category:{type:mongoose.Schema.Types.ObjectId,ref:"category",required:true},
     price:{type:Number,required:true},
     img:{type:String, validate:{validator:function(v){return /^(http|https):\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(v)},
                                                 message: props => `${props.value} is not a valid image URL!`}
