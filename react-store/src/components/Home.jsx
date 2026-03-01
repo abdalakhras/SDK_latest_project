@@ -38,7 +38,7 @@ function Home() {
           <h3>{categoryName}</h3>
         <ul>
           {products[categoryName].map((item)=>(
-            <li key={item._id}>{item.name}</li>
+            <li key={item._id}>{item.name} {item.price}</li>
           ))}      
         </ul>
         </div>     
