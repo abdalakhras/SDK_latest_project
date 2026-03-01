@@ -27,13 +27,41 @@ exports.getProducts = async (req,res) => {
 
     try {
         const getProd = await Product.find().populate('category')
-        res.status(200).json(getProd)
+
+        // const groupedProducts = getProd.reduce((acc,product)=>{
+        //     const categoryname = product.category?.name
+        //     if(!acc[categoryname]){ 
+        //     }
+        //     acc[categoryname].push(product) 
+        //     return acc
+        // },{})
+        return res.status(200).json(getProd)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({message:error.message})
+    }    
+}
+
+exports.getproductsBycategory = async (req,res) => {
+    
+    try {
+        const products = await Product.find().populate('category','name')
+        const groupedProducts = products.reduce((acc,product)=>{
+            const categoryName = product.category?.name
+            if(!acc[categoryName]){ //this line checks on every iteration if the category name is initialized yet ? ,if not set the value an empty array
+                acc[categoryName] = []
+            }
+            acc[categoryName].push(product) // if initialized , push the product obj into that array {categotyname:[product]}
+            return acc
+        },{})
+        return res.status(200).json({products:groupedProducts})
+
     } catch (error) {
         console.log(error.message)
         res.status(500).json({message:error.message})
     }
-    
 }
+
 exports.deleteProduct = async (req,res) => {
     const id = req.params.id
     try {
