@@ -16,7 +16,8 @@ function Home() {
     try {
       const {data} = await api.get('/products/getproductsbycategory')
       console.log(data)
-      setProducts(data)
+       console.log(data.products)
+      setProducts(data.products)
     } catch (error) {
       console.log(error.message)
     }
@@ -30,7 +31,18 @@ function Home() {
       <button className={theme} onClick={toggleTheme}>
         change to {theme === "dark" ? "light" : "dark"} mode
       </button>
-      <Button>show products</Button>
+      <Button onClick={showProducts}>show products</Button>
+      <h2>PRODUCTS : </h2>
+      {Object.keys(products).map((categoryName)=>(
+        <div key={categoryName}>
+          <h3>{categoryName}</h3>
+        <ul>
+          {products[categoryName].map((item)=>(
+            <li key={item._id}>{item.name}</li>
+          ))}      
+        </ul>
+        </div>     
+      ))}
     </>
   );
 }
