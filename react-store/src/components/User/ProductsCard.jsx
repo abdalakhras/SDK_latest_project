@@ -66,12 +66,12 @@ export default function ProductsCard() {
                     >
                       {product.discription}
                     </Typography>
-                    <Typography
+                    {/* <Typography
                       variant="body2"
                       sx={{ color: "text.secondary" }}
                     >
                       {product.category}
-                    </Typography>
+                    </Typography> */}
                     <Typography
                       variant="body2"
                       sx={{ color: "text.secondary" }}

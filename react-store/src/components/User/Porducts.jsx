@@ -71,7 +71,7 @@ function Products() {
                   {product.name}
                 </TableCell>
                 <TableCell align="right">{product.discription}</TableCell>
-                <TableCell align="right">{product.category}</TableCell>
+                {/* <TableCell align="right">{product.category}</TableCell> */}
                 <TableCell align="right">{product.price}</TableCell>
                 <TableCell align="right">
                   <img width={'200px'} src={product.img} alt="cant show image" />
