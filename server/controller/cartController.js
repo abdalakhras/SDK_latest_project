@@ -5,7 +5,7 @@ exports.addToCart = async (req,res) => {
     const userId = req.Authorized.id
      const {productsId,quantity} = req.body
     try {
-        const cart = await Cart.findOne({user:userId})
+        let cart = await Cart.findOne({user:userId})
         if(!cart){
             cart = Cart.create({
                 user:userId,
@@ -30,7 +30,7 @@ exports.addToCart = async (req,res) => {
 exports.getCartItems = async (req,res) => {
    const userId = req.Authorized.id
     try {
-        const cart = await Cart.findOne({user:userId}).populate('items.productId')
+        let cart = await Cart.findOne({user:userId}).populate('items.productId')
         if(cart.length === 0){
             return res.status(200).json({cart:[],message:"no cart items were found"})
         }
