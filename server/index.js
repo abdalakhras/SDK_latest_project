@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
 const categoryRouter = require("./routers/categoryRouter");
+const cartRouter = require("./routers/cartRouter")
 const { globalRateLimit } = require("./authMiddleWare/rateLimit.middleWare");
 const {
   globalErrorHandler,
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/cart",cartRouter)
 
 app.use(notFound);
 app.use(globalErrorHandler);
