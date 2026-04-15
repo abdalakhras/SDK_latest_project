@@ -31,12 +31,12 @@ exports.getCartItems = async (req,res) => {
    const userId = req.Authorized.id
     try {
         let cart = await Cart.findOne({user:userId}).populate('items.productId')
-        if(cart.length === 0){
-            return res.status(200).json({cart:[],message:"no cart items were found"})
+        if(!cart){
+            return res.status(400).json({cart:[],message:"no cart items were found"})
         }
         return res.status(200).json({cart,message:"cart items fetched succefully"})
     } catch (error) {
-         console.log(error.message)
          res.status(500).json({message:error.message})
+         console.log(error.message)
     }
 }
