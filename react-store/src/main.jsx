@@ -5,12 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./components/Context/Authcontext.jsx";
 import ThemeProvider from "./components/Context/ThemeContext.jsx";
+import { CartProvider } from "./components/Context/cartContext.jsx";
 
 createRoot(document.getElementById("root")).render(
  
    <ThemeProvider>
     <AuthProvider>
+      <CartProvider>
       <App />
+      </CartProvider>
     </AuthProvider>
   </ThemeProvider>
 );

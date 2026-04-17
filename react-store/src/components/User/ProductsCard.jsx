@@ -11,6 +11,9 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Navbar from "../navbar/Navbar";
+import { useContext } from "react";
+import { CartContext } from "../Context/cartContext";
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -24,6 +27,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ProductsCard() {
+
+const {addToCart,cart} = useContext(CartContext)
+
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -80,8 +86,13 @@ export default function ProductsCard() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" 
+                    onClick={()=>{
+                      // addToCart(product._id)
+                      console.log(product._id)
+                    }}
+                    >addToCart</Button>
+                    {/* <Button size="small">Learn More</Button> */}
                   </CardActions>
                 </Card>
               </Item>
