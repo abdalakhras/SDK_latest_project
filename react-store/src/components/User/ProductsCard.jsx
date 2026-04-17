@@ -12,8 +12,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Navbar from "../navbar/Navbar";
 import { useContext } from "react";
-import { CartContext } from "../Context/cartContext";
-
+import CartContext from "../Context/CartContext";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -88,7 +87,7 @@ const {addToCart,cart} = useContext(CartContext)
                   <CardActions>
                     <Button size="small" 
                     onClick={()=>{
-                      // addToCart(product._id)
+                      addToCart(product._id)
                       console.log(product._id)
                     }}
                     >addToCart</Button>

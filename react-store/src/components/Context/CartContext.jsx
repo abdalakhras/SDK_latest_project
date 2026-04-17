@@ -10,10 +10,11 @@ export const CartProvider = ({ children }) => {
     const res = await api.get("/cart/getcart");
     setCart(res.data.cart);
   };
-  const addToCart = async (productId) => {
+  const addToCart = async (productsId) => {
     try {
-      const res = await api.post("/cart/addtocart", { productId });
+      const res = await api.post("/cart/addtocart", productsId);
       setCart(res.data.cart);
+      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

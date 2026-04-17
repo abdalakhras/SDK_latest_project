@@ -9,21 +9,23 @@ exports.addToCart = async (req,res) => {
         if(!cart){
             cart = Cart.create({
                 user:userId,
-                items:[{productId:productsId,quantity}]
+                items:[{productId:productsId}]
             })
-        }
-        const existingItemIndex = cart.items.findIndex(item=> item.productId.toString()===productsId)
-        if(existingItemIndex >=0){
+        }else{
+            const existingItemIndex = cart.items.findIndex(item=> item.productId === productsId)
+
+             if(existingItemIndex >=0){
             cart.items[existingItemIndex].quantity += quantity
         }else{
             cart.items.push({productId:productsId,quantity})    
         }
-        await cart.save()
+         await cart.save()
+        }
       return  res.status(200).json({cart,message:'cart created successfully'})
         
     } catch (error) {
-        console.log(error.message)
          res.status(500).json({message:error.message})
+         console.log(error.message)
     }
 }
 
