@@ -7,7 +7,7 @@ exports.addToCart = async (req,res) => {
     try {
         let cart = await Cart.findOne({user:userId})
         if(!cart){
-            cart = Cart.create({
+            cart = await Cart.create({
                 user:userId,
                 items:[{productId:productsId}]
             })

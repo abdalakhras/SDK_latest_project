@@ -3,7 +3,7 @@ import api from "../../services/api";
 
 export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+export default function CartProvider({ children }){
   const [cart, setCart] = useState([]);
 
   const fetchCart = async () => {
@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
   };
   const addToCart = async (productsId) => {
     try {
-      const res = await api.post("/cart/addtocart", productsId);
+      const res = await api.post("/cart/addtocart", {productsId});
       setCart(res.data.cart);
       console.log(res.data);
     } catch (error) {
