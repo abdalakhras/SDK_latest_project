@@ -15,6 +15,7 @@ import ProductsCard from "./components/User/ProductsCard.jsx";
 import Dashboard from "./components/Admin/Dashboard.jsx";
 import Sidebar from "./components/sidebar/Sidebar.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/products" element={<ProductsCard />} />
+        <Route path="/cart" element={<Cart/>}/>
         
         <Route element={<AdminRoute/>}>
         {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
