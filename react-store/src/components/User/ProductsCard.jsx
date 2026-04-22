@@ -13,6 +13,8 @@ import Grid from "@mui/material/Grid";
 import Navbar from "../navbar/Navbar";
 import { useContext } from "react";
 import {CartContext} from "../Context/CartContext";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -26,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ProductsCard() {
-
+const navigate = useNavigate()
 const {addToCart,cart} = useContext(CartContext)
 
   const [products, setProducts] = useState([]);
@@ -92,7 +94,7 @@ const {addToCart,cart} = useContext(CartContext)
                       console.log(cart)
                     }}
                     >addToCart</Button>
-                    {/* <Button size="small">Learn More</Button> */}
+                    <Button size="small" onClick={()=>{navigate('/cart')}}>go to cart</Button>
                   </CardActions>
                 </Card>
               </Item>

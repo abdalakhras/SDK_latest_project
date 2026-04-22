@@ -3,19 +3,30 @@ import api from "../../services/api";
 
 export const CartContext = createContext();
 
-export default function CartProvider({ children }){
+export default function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const fetchCart = async () => {
     const res = await api.get("/cart/getcart");
     setCart(res.data.cart);
-    console.log(res.data.cart)
+    console.log(res.data);
   };
   const addToCart = async (productsId) => {
     try {
-      const res = await api.post("/cart/addtocart", {productsId});
+      const res = await api.post("/cart/addtocart", { productsId });
       setCart(res.data.cart);
       console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const increaseItem = async (productsId) => {
+    try {
+      const res = await api.put("/cart/increasequantity", { productsId });
+      console.log(res.data)
+      setCart(res.data.updatedCart);
+      fetchCart();
     } catch (error) {
       console.log(error.message);
     }
@@ -27,9 +38,9 @@ export default function CartProvider({ children }){
 
   return (
     <>
-      <CartContext.Provider value={{ cart, setCart, addToCart }}>
+      <CartContext.Provider value={{ cart, setCart, addToCart, increaseItem }}>
         {children}
       </CartContext.Provider>
     </>
   );
-};
+}

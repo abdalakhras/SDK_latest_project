@@ -47,3 +47,29 @@ exports.getCartItems = async (req,res) => {
          console.log(error.message)
     }
 }
+
+exports.increaseItem = async (req,res) => {
+   const userId = req.Authorized.id
+   const {productsId} = req.body
+   console.log(productsId)
+    try {
+        const cart = await Cart.findOne({user:userId})
+        if(!cart)
+            return console.log('no cart for such userId')
+        
+        const item = cart.items.find(itm=> itm.productId.toString() === productsId)
+        if(!item)
+            return res.status(400).json({message:"product in cart not found"})
+
+        item.quantity +=1  
+        await cart.save()
+
+        const updatedCart = await Cart.findById(cart._id).populate('items.productId')
+        return res.status(200).json({message:"product quantity updated successfully",updatedCart})
+
+    } catch (error) {
+        res.status(500).json({message:error.message})
+         console.log(error.message)
+    }
+    
+}

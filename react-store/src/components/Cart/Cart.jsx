@@ -1,30 +1,90 @@
 import React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
+import Navbar from "../navbar/Navbar"
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: (theme.vars ?? theme).palette.text.secondary,
+  ...theme.applyStyles("dark", {
+    backgroundColor: "#1A2027",
+  }),
+}));
 
 
 function Cart(){
 
-    const {cart} = useContext(CartContext)
+    const {cart,increaseItem} = useContext(CartContext)
     console.log(cart)
 
     return(
         <>
         <h1>welcome to cart page</h1>
-        <div>
-        {cart?.items?.map((item)=>{
-            return(
-            <ul key={item._id}>
-                <li>{item.productId.name}</li>
-                {/* something wrong with the category  */}
-                <li>{item.productId.category}</li> 
-                 <li>{item.productId.price}</li>
-                   <li>{item.quantity}</li>
-
-            </ul>
-            )
-        })}
-        </div>
+         <Navbar/>
+    <br />
+    <br />
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          {cart?.items?.map((itm) => (
+            <Grid size={{ xs: 6, md: 3 }} key={itm._id}>
+              <Item>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image={itm.productId.img}
+                    title="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {itm.productId.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      {itm.productId.discription}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      quantity : {itm.quantity}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      price : {itm.productId.price}$
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small"onClick={()=>{
+                        console.log(itm.productId._id)
+                        increaseItem(itm.productId._id)
+                    }}>increase quantity</Button>
+                    <Button size="small">decrease quantity</Button>
+                  </CardActions>
+                </Card>
+              </Item>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
         </>
     )
 
