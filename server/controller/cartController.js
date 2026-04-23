@@ -73,3 +73,20 @@ exports.increaseItem = async (req,res) => {
     }
     
 }
+
+exports.clearCart = async (req,res) => {
+    const userId = req.Authorized.id
+    try {
+        const cart = await Cart.findOne({user:userId})
+        if(!cart){
+            return res.status(400).json({message:"no cart found"})
+        }
+            cart.items = []
+            await cart.save()
+            const deletedCart = await Cart.findById(cart._id)
+            return res.status(200).json({deletedCart,message:'cart has been emptied'})
+    } catch (error) {
+        res.status(500).json({message:error.message})
+         console.log(error.message)
+    }
+}

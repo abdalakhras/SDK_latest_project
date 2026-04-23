@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Cart(){
 
-    const {cart,increaseItem} = useContext(CartContext)
+    const {cart,increaseItem,cleareCart} = useContext(CartContext)
     console.log(cart)
 
     return(
@@ -38,6 +38,13 @@ function Cart(){
          <Navbar/>
     <br />
     <br />
+    <Button onClick={()=>{
+      cleareCart()
+    }}>clear Cart</Button>
+    
+    {cart?.items?.length === 0 && (
+      <Typography>your cart is empty</Typography>
+    )}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           {cart?.items?.map((itm) => (

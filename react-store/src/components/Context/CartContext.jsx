@@ -1,5 +1,7 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import api from "../../services/api";
+import toast from "react-hot-toast"
+
 
 export const CartContext = createContext();
 
@@ -32,13 +34,26 @@ export default function CartProvider({ children }) {
     }
   };
 
+  const cleareCart = async () => {
+    
+    try {
+      const res = await api.delete('/cart/deletCart')
+      console.log(res.data)
+      setCart(res.data.deletedCart)
+      fetchCart()
+      toast.success("cart has been emptied")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchCart();
   }, []);
 
   return (
     <>
-      <CartContext.Provider value={{ cart, setCart, addToCart, increaseItem }}>
+      <CartContext.Provider value={{ cart, setCart, addToCart, increaseItem,cleareCart }}>
         {children}
       </CartContext.Provider>
     </>
