@@ -90,3 +90,48 @@ exports.clearCart = async (req,res) => {
          console.log(error.message)
     }
 }
+
+exports.decreaseItem = async (req,res) => {
+    const userId = req.Authorized.id
+    const {productsId}=req.body
+    try {
+        const cart = await Cart.findOne({user:userId})
+        if(!cart)
+            return res.status(400).json({message:'no cart found'})
+
+        const item = cart.items.find((item)=>item.productId.toString()===productsId)
+        if(!item)
+            return res.status(400).json({message:"no such product in cart"})
+
+        item.quantity -= 1
+        if(item.quantity<=0){
+            cart.items = cart.items.filter((itm)=>itm.productId.toString() !== productsId)
+        }
+        await cart.save()
+        const updatedCart = await Cart.findById(cart._id).populate("items.productId")
+        return res.status(200).json({updatedCart,message:"product quantity updated successfully"})
+    } catch (error) {
+        res.status(500).json({message:error.message})
+        console.log(error.message)
+    }
+    
+}
+
+exports.cleareItem = async (req,res) => {
+     const userId = req.Authorized.id
+     const{productsId} = req.body
+    try {
+        const cart = await Cart.findOne({user:userId})
+        if(!cart)
+            return console.log('no cart for such userId')
+
+        cart.items = cart.items.filter((item)=>item.productId.toString() !== productsId)
+        await cart.save()
+        const clearProduct = await Cart.findById(cart._id).populate('items.productId')
+        return res.status(200).json({clearProduct,message:"prpduct cleared successfully"})
+    } catch (error) {
+         res.status(500).json({message:error.message})
+        console.log(error.message)
+    }
+    
+}

@@ -33,6 +33,29 @@ export default function CartProvider({ children }) {
       console.log(error.message);
     }
   };
+const decreaseItem = async (productsId) => {
+  
+  try{
+      const res = await api.put('/cart/decreasequantity',{productsId})
+      console.log(res.data)
+      setCart(res.data.updatedCart)
+      fetchCart()
+  }catch (error) {
+      console.log(error.message);
+    }
+}
+const clearItem = async (productsId) => {
+
+  try {
+    const res = await api.delete('/cart/deleProduct',{productsId})
+    console.log(res.data)
+    setCart(res.data.clearProduct)
+    fetchCart()
+  } catch (error) {
+   console.log(error.message) 
+  }
+}
+
 
   const cleareCart = async () => {
     
@@ -53,7 +76,7 @@ export default function CartProvider({ children }) {
 
   return (
     <>
-      <CartContext.Provider value={{ cart, setCart, addToCart, increaseItem,cleareCart }}>
+      <CartContext.Provider value={{ cart, setCart, addToCart, increaseItem,cleareCart,decreaseItem,clearItem}}>
         {children}
       </CartContext.Provider>
     </>

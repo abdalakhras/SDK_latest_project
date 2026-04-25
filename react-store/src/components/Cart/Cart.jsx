@@ -13,7 +13,10 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
-import Navbar from "../navbar/Navbar"
+import Navbar from "../navbar/Navbar";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import PlusOneIcon from "@mui/icons-material/PlusOne";
+import AddIcon from "@mui/icons-material/Add";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -26,25 +29,26 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
+function Cart() {
+  const { cart, increaseItem, cleareCart, decreaseItem, clearItem } =
+    useContext(CartContext);
+  console.log(cart);
 
-function Cart(){
+  return (
+    <>
+      <h1>welcome to cart page</h1>
+      <Navbar />
+      <br />
+      <br />
+      <Button
+        onClick={() => {
+          cleareCart();
+        }}
+      >
+        clear Cart
+      </Button>
 
-    const {cart,increaseItem,cleareCart} = useContext(CartContext)
-    console.log(cart)
-
-    return(
-        <>
-        <h1>welcome to cart page</h1>
-         <Navbar/>
-    <br />
-    <br />
-    <Button onClick={()=>{
-      cleareCart()
-    }}>clear Cart</Button>
-    
-    {cart?.items?.length === 0 && (
-      <Typography>your cart is empty</Typography>
-    )}
+      {cart?.items?.length === 0 && <Typography>your cart is empty</Typography>}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           {cart?.items?.map((itm) => (
@@ -80,11 +84,31 @@ function Cart(){
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small"onClick={()=>{
-                        console.log(itm.productId._id)
-                        increaseItem(itm.productId._id)
-                    }}>increase quantity</Button>
-                    <Button size="small">decrease quantity</Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        console.log(itm.productId._id);
+                        increaseItem(itm.productId._id);
+                      }}
+                    >
+                      <AddIcon></AddIcon>
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        decreaseItem(itm.productId._id);
+                      }}
+                    >
+                      decrease quantity
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        clearItem(itm.productId._id);
+                      }}
+                    >
+                      <DeleteForeverIcon></DeleteForeverIcon>
+                    </Button>
                   </CardActions>
                 </Card>
               </Item>
@@ -92,9 +116,8 @@ function Cart(){
           ))}
         </Grid>
       </Box>
-        </>
-    )
-
+    </>
+  );
 }
 
-export default Cart
+export default Cart;
