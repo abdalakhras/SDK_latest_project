@@ -10,5 +10,5 @@ router.get('/getcart',userAuth,getCartItems)
 router.put ('/increasequantity',userAuth,increaseItem)
 router.delete('/deletCart',userAuth,clearCart)
 router.put('/decreasequantity',userAuth,decreaseItem)
-router.delete('/deleProduct',userAuth,cleareItem)
+router.put('/deleProduct',userAuth,cleareItem)
 module.exports = router

@@ -47,7 +47,7 @@ const decreaseItem = async (productsId) => {
 const clearItem = async (productsId) => {
 
   try {
-    const res = await api.delete('/cart/deleProduct',{productsId})
+    const res = await api.put('/cart/deleProduct',{productsId})
     console.log(res.data)
     setCart(res.data.clearProduct)
     fetchCart()

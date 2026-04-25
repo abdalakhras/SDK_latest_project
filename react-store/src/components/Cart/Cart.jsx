@@ -17,6 +17,8 @@ import Navbar from "../navbar/Navbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -30,6 +32,10 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Cart() {
+
+  const navigate = useNavigate()
+
+
   const { cart, increaseItem, cleareCart, decreaseItem, clearItem } =
     useContext(CartContext);
   console.log(cart);
@@ -47,6 +53,7 @@ function Cart() {
       >
         clear Cart
       </Button>
+      <Button onClick={()=>navigate('/products')}>back to products</Button>
 
       {cart?.items?.length === 0 && <Typography>your cart is empty</Typography>}
       <Box sx={{ flexGrow: 1 }}>
@@ -99,7 +106,7 @@ function Cart() {
                         decreaseItem(itm.productId._id);
                       }}
                     >
-                      decrease quantity
+                      <RemoveIcon></RemoveIcon>
                     </Button>
                     <Button
                       size="small"
