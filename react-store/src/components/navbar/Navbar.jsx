@@ -21,7 +21,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, width: "90vw" }}  >
+      <Box sx={{ flexGrow: 1, width: "70vw" }}  >
         <AppBar position="static" >
           <Toolbar>
             <IconButton

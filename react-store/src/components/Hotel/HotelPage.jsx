@@ -19,6 +19,7 @@ import Grid from "@mui/material/Grid";
 import Navbar from "../navbar/Navbar";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import RoomPage from "./RoomPage";
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -34,6 +35,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function HotelPage() {
   const [rooms, setRooms] = useState([]);
+
+    const navigate = useNavigate()
 
   const fetchRooms = async () => {
     try {
@@ -54,7 +57,7 @@ export default function HotelPage() {
     <>
     <Navbar/>
     <br />
-      <Card sx={{ width: "800px" }}>
+      <Card sx={{width: "70vw"}}>
         {/* Large Image Area */}
         <CardMedia
           component="img"
@@ -84,9 +87,9 @@ export default function HotelPage() {
       <br />
       <br />
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           {rooms?.map((room) => (
-            <Grid size={{ xs: 6, md: 3 }} key={room._id}>
+            <Grid size={{ xs: 6, md:4 }} key={room._id}>
               <Item>
                 <Card sx={{ maxWidth: 345 }}>
                   <CardMedia
@@ -136,6 +139,8 @@ export default function HotelPage() {
                       size="small"
                       onClick={() => {
                         console.log(room._id);
+                    
+                        navigate(`/room/${room._id}`)
                       }}
                     >
                       show details

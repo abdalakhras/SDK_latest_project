@@ -17,7 +17,7 @@ import Sidebar from "./components/sidebar/Sidebar.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import HotelPage from "./components/Hotel/HotelPage.jsx";
-
+import RoomPage from "./components/Hotel/RoomPage.jsx";
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
          <Route path="/home" element={<Home />} />
          {/* <Route path="/navbar" element={<Navbar />} /> */}
          <Route path="/hotelpage" element={<HotelPage/>}/>
+         <Route path="/room/:id" element={<RoomPage/>}/>
 
         <Route element={<ProtectedRoute/>}>
         
