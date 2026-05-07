@@ -49,7 +49,7 @@ const {addToCart,cart} = useContext(CartContext)
 
   return (
     <>
-    <Navbar/>
+
     <br />
     <br />
       <Box sx={{ flexGrow: 1 }}>

@@ -16,6 +16,7 @@ import Dashboard from "./components/Admin/Dashboard.jsx";
 import Sidebar from "./components/sidebar/Sidebar.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
 import Cart from "./components/Cart/Cart.jsx";
+import HotelPage from "./components/Hotel/HotelPage.jsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/login" element={<Login />} />
          <Route path="/home" element={<Home />} />
          {/* <Route path="/navbar" element={<Navbar />} /> */}
+         <Route path="/hotelpage" element={<HotelPage/>}/>
 
         <Route element={<ProtectedRoute/>}>
         
