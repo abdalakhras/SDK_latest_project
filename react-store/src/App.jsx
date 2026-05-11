@@ -18,6 +18,8 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import HotelPage from "./components/Hotel/HotelPage.jsx";
 import RoomPage from "./components/Hotel/RoomPage.jsx";
+import Bookings from "./components/Admin/Bookings.jsx";
+import Booking from "./components/User/booking.jsx";
 
 function App() {
   return (
@@ -37,12 +39,15 @@ function App() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/products" element={<ProductsCard />} />
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/booking" element={<Booking/>}/>
         
         <Route element={<AdminRoute/>}>
         {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
         <Route path="/users" element={<Users />} />
         <Route path ="/adminProducts" element={<AdminProducts/>} />
         <Route path="/categories" element={<Categories/>}/>
+          <Route path="/bookings" element={<Bookings/>}/>
+        
         </Route>
 
         </Route>

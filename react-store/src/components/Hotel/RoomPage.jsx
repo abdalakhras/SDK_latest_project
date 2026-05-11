@@ -26,8 +26,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import taost from 'react-hot-toast' 
 
 export default function RoomPage() {
+const navigate = useNavigate()
   const [checkIn, setCheckin] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [guests, setGuests] = useState(1);
@@ -68,8 +70,8 @@ export default function RoomPage() {
     try {
       const res = await api.post("/booking/book", {
         room: id,
-        checkIn: checkIn.toISOString(),
-        checkOut: checkOut.toISOString(),
+        checkIn: checkIn.format("YYYY-MM-DD"),
+        checkOut: checkOut.format("YYYY-MM-DD"),
         guests: guests,
         totalAmount:
          Number((new Date(checkOut) - new Date(checkIn))/(24*60*60*1000)*(room?.price))
@@ -82,6 +84,9 @@ export default function RoomPage() {
   return (
     <>
       <h1>Room Page</h1>
+      <Button onClick={()=>{
+        navigate('/hotelpage')
+      }}>back to hotelpage</Button>
       <ImageList
         sx={{ width: 500, height: 450 }}
         cols={2}
@@ -131,6 +136,7 @@ export default function RoomPage() {
           />
         </LocalizationProvider>
         <Button type="submit">book</Button>
+        <div>total price : { Number((new Date(checkOut) - new Date(checkIn))/(24*60*60*1000)*(room?.price))} </div>
       </Box>
     </>
   );

@@ -37,3 +37,34 @@ exports.createBooking = async (req, res) => {
      return
   }
 };
+
+exports.getBookings = async (req,res) => {
+  const user = req.Authorized.id
+  try {
+      const booking = await Booking.findOne({user:user}).populate('room')
+      if(!booking){
+        return res.status(400).json({message:"no booking for this user"})
+      }
+      return res.status(200).json({booking,message:"booking for user found"})
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log(error.message);
+     return
+  }
+  
+}
+
+exports.getAllBookings = async (req,res) => {
+  try {
+      const booking = await Booking.find().populate('room')
+      if(!booking){
+        return res.status(400).json({message:"no booking for this user"})
+      }
+      return res.status(200).json({booking,message:"booking for user found"})
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log(error.message);
+     return
+  }
+  
+}
