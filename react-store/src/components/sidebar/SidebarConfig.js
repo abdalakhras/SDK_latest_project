@@ -8,7 +8,8 @@ export const SidebarConfig = {
         {label:'products',path:'/adminProducts'},
          {label:'users',path:'/users'},
          {label:'categories',path:'/categories'},
-         {label:'Bookings',path:'/bookings'}
+         {label:'Bookings',path:'/bookings'},
+         {label:"Rooms",path:"/adminRooms"},
 
     ]
 }

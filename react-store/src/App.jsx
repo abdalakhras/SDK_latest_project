@@ -20,6 +20,7 @@ import HotelPage from "./components/Hotel/HotelPage.jsx";
 import RoomPage from "./components/Hotel/RoomPage.jsx";
 import Bookings from "./components/Admin/Bookings.jsx";
 import Booking from "./components/User/booking.jsx";
+import Rooms from "./components/Admin/Rooms.jsx";
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path ="/adminProducts" element={<AdminProducts/>} />
         <Route path="/categories" element={<Categories/>}/>
-          <Route path="/bookings" element={<Bookings/>}/>
+        <Route path="/bookings" element={<Bookings/>}/>
+        <Route path="/adminRooms" element={<Rooms/>}/>
         
         </Route>
 
