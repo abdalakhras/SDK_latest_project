@@ -77,6 +77,7 @@ exports.deleteRoom = async (req, res) => {
   const id = req.params.id;
   try {
     const room = await Rooms.findByIdAndDelete(id);
+    res.status(200).json({message:'room deleted succefully'})
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });

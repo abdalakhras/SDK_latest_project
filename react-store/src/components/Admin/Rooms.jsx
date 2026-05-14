@@ -62,11 +62,6 @@ export default function Rooms() {
   };
 
   //   updateRooms
-  const [udpateStatus, setUpdpateStatus] = React.useState("");
-
-  const handleChange = (event) => {
-    setUpdpateStatus(event.target.value);
-  };
 
   const [updateRooms, setUpdateRrooms] = useState({
     id: "",
@@ -79,14 +74,11 @@ export default function Rooms() {
     statsus: "",
     discription: "",
   });
-  //   const [id,setId] =useState('')
   const [name, setName] = useState("");
-  const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const [capacity, setCapacity] = useState("");
   const [view, setView] = useState("");
   const [images, setImages] = useState(["", "", ""]);
-  const [status, setStatus] = useState("");
   const [discription, setDiscription] = useState("");
 
   const updateRoom = async (e) => {
@@ -101,6 +93,22 @@ export default function Rooms() {
       console.log(error.message);
     }
   };
+
+//   delete Room 
+  const DeleteRoom = async (id) => {
+    const confirm = window.confirm("you wanna delete room ?");
+    if (confirm) {
+    try {
+        const res = await api.delete(`/rooms/delroom/${id}`)
+        console.log(res.data.message)
+        toast.error("room deleted")
+        fetchrooms()
+    } catch (error) {
+        console.log(error.message)
+    }
+ }
+  }
+
   //   fetch rooms
   const [rooms, setRooms] = useState([]);
   const fetchrooms = async () => {
@@ -280,27 +288,27 @@ export default function Rooms() {
                   />
                 </TableCell>
                 <TableCell>
-                  <Button>delete</Button>
+                  <Button onClick={()=>{
+                    DeleteRoom(room._id)
+                  }}>delete</Button>
                 </TableCell>
                 <TableCell>
                   <Button
                     align="right"
                     onClick={() => {
                       setShowModal(true);
-                      setUpdateRrooms({ ...updateRooms, id: room._id });
+                      setUpdateRrooms({ ...updateRooms, id: room._id,status:room.status,type:room.type }); //this is faster render:updates on first render
                       setName(room.name);
-                      setType(room.type);
                       setPrice(room.price);
                       setCapacity(room.capacity);
                       setDiscription(room.discription);
                       setView(room.view);
-                      setStatus(room.status);
                       setImages([
                         room.images[0],
                         room.images[1],
                         room.images[2],
                       ]);
-                      console.log(id)
+                     
                     }}
                   >
                     update
@@ -338,15 +346,26 @@ export default function Rooms() {
                 setUpdateRrooms({ ...updateRooms, name: e.target.value })
               }
             />
-            <TextField
-              id="update-type"
-              label="type"
-              variant="standard"
-              defaultValue={type}
-              onChange={(e) =>
-                setUpdateRrooms({ ...updateRooms, type: e.target.value })
-              }
-            />
+           {/* select Type */}
+
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }}>
+                <InputLabel id="demo-simple-select-standard-label">
+                  status
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={updateRooms.type}
+                  label="status"
+                  onChange={(e)=>{setUpdateRrooms({...updateRooms,type:e.target.value})}}
+                >
+                  <MenuItem value="Single">Single</MenuItem>
+                  <MenuItem value="Double">Double</MenuItem>
+                  <MenuItem value="Suite">Suite</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <TextField
               id="update-price"
               label="price"
@@ -384,10 +403,9 @@ export default function Rooms() {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={udpateStatus}
+                  value={updateRooms.status}
                   label="status"
-                  onChange={handleChange}
-                  defaultValue={status}
+                  onChange={(e)=>{setUpdateRrooms({...updateRooms,status:e.target.value})}}
                 >
                   <MenuItem value="Available">Available</MenuItem>
                   <MenuItem value="Booked">Booked</MenuItem>
