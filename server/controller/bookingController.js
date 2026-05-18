@@ -85,3 +85,13 @@ exports.updateBooking = async (req, res) => {
     console.log(error);
   }
 };
+exports.deletBooking = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const booking = await Booking.findByIdAndDelete(id);
+    res.status(200).json({ message: "booking deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log(error);
+  }
+};

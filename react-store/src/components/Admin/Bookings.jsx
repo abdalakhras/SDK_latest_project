@@ -60,28 +60,46 @@ export default function Bookings() {
 
   const [checkIn, setCheckin] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
-
+  const [guests, setGuests] = useState(1);
+  const [amount, setAmount] = useState("");
   const [updateBooking, setUpdateBooking] = useState({
     id: "",
-    checkIn: checkIn,
-    checkOut: checkOut,
+    checkIn: "",
+    checkOut: "",
     guests: "",
     totalAmount: "",
     status: "",
   });
-  const [guests, setGuests] = useState(1);
-  const [amount, setAmount] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.put("booking/updateBooking", updateBooking);
+      const res = await api.put("booking/updateBooking", {
+        ...updateBooking,
+        checkIn: checkIn.format("YYYY-MM-DD"),
+        checkOut: checkOut.format("YYYY-MM-DD"),
+      });
       console.log(res.data.message);
       toast.success("booking status updated");
       fetchBookings();
       setShowModal(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  // delete booking
+
+  const Delete = async (id) => {
+    const confirm = window.confirm("you wanna delete room ?");
+    if (confirm) {
+      try {
+        const res = await api.delete(`/booking/deleteBooking/${id}`);
+        toast.success("booking deleted");
+        fetchBookings();
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
