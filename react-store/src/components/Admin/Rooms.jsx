@@ -320,7 +320,7 @@ export default function Rooms() {
         </Table>
       </TableContainer>
 
-      {/* update rooms via mocal */}
+      {/* update rooms via modal */}
       <Modal
         open={showModal}
         aria-labelledby="modal-modal-title"

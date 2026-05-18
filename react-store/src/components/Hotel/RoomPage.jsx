@@ -26,19 +26,18 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import taost from 'react-hot-toast' 
+import taost, { toast } from "react-hot-toast";
 
 export default function RoomPage() {
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const [checkIn, setCheckin] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [guests, setGuests] = useState(1);
 
-//   console.log("checkIn",checkIn)
-//    console.log("checkIn to new date",new Date(checkIn))
-//   console.log("checkOut",checkOut)
-// console.log("checkOut to new date",new Date(checkOut))
- 
+  //   console.log("checkIn",checkIn)
+  //    console.log("checkIn to new date",new Date(checkIn))
+  //   console.log("checkOut",checkOut)
+  // console.log("checkOut to new date",new Date(checkOut))
 
   const { id } = useParams();
   // console.log("params:", useParams());
@@ -73,20 +72,30 @@ const navigate = useNavigate()
         checkIn: checkIn.format("YYYY-MM-DD"),
         checkOut: checkOut.format("YYYY-MM-DD"),
         guests: guests,
-        totalAmount:
-         Number((new Date(checkOut) - new Date(checkIn))/(24*60*60*1000)*(room?.price))
+        totalAmount: Number(
+          ((new Date(checkOut) - new Date(checkIn)) / (24 * 60 * 60 * 1000)) *
+            room?.price,
+        ),
       });
       console.log(res.data);
+      toast.success("room booked successfully");
     } catch (error) {
       console.log(error.message);
+      if (error.response && error.response.status == 400) {
+        toast.error("room is already booked");
+      }
     }
   };
   return (
     <>
       <h1>Room Page</h1>
-      <Button onClick={()=>{
-        navigate('/hotelpage')
-      }}>back to hotelpage</Button>
+      <Button
+        onClick={() => {
+          navigate("/hotelpage");
+        }}
+      >
+        back to hotelpage
+      </Button>
       <ImageList
         sx={{ width: 500, height: 450 }}
         cols={2}
@@ -123,6 +132,7 @@ const navigate = useNavigate()
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            label="checkIn"
             value={checkIn}
             onChange={(newValue) => setCheckin(newValue)}
           />
@@ -130,13 +140,20 @@ const navigate = useNavigate()
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            label="checkOut"
             value={checkOut}
             onChange={(newValue) => setCheckOut(newValue)}
             minDate={checkIn}
           />
         </LocalizationProvider>
         <Button type="submit">book</Button>
-        <div>total price : { Number((new Date(checkOut) - new Date(checkIn))/(24*60*60*1000)*(room?.price))} </div>
+        <div>
+          total price :{" "}
+          {Number(
+            ((new Date(checkOut) - new Date(checkIn)) / (24 * 60 * 60 * 1000)) *
+              room?.price,
+          )}{" "}
+        </div>
       </Box>
     </>
   );

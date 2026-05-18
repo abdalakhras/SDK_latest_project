@@ -12,59 +12,76 @@ exports.createBooking = async (req, res) => {
     //   checkOut: { $gt: new Date(checkIn) }
 
     if (!existingBooking) {
-    let booking = await Booking.create({
-      room,
-      user: user,
-      checkIn,
-      checkOut,
-      guests,
-      totalAmount,
-    });
+      let booking = await Booking.create({
+        room,
+        user: user,
+        checkIn,
+        checkOut,
+        guests,
+        totalAmount,
+      });
 
-    return res.status(200).json({ message: "Booking created successfully", booking });
-       
-    }else{
-        return res.status(400).json({message:"room already booked"})
+      return res
+        .status(200)
+        .json({ message: "Booking created successfully", booking });
+    } else {
+      return res.status(400).json({ message: "room already booked" });
     }
 
     //   if (new Date(checkIn) >= new Date(checkOut)) {
     //   return res.status(400).json({message: 'Check-out date must be after check-in date'});
     // }
- 
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log(error.message);
-     return
+    return;
   }
 };
 
-exports.getBookings = async (req,res) => {
-  const user = req.Authorized.id
+exports.getBookings = async (req, res) => {
+  const user = req.Authorized.id;
   try {
-      const booking = await Booking.findOne({user:user}).populate('room')
-      if(!booking){
-        return res.status(400).json({message:"no booking for this user"})
-      }
-      return res.status(200).json({booking,message:"booking for user found"})
+    const booking = await Booking.find({ user: user }).populate("room");
+    if (!booking || booking.length === 0) {
+      return res.status(400).json({ message: "no booking for this user" });
+    }
+    return res.status(200).json({ booking, message: "booking for user found" });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log(error.message);
-     return
+    return;
   }
-  
-}
+};
 
-exports.getAllBookings = async (req,res) => {
+exports.getAllBookings = async (req, res) => {
   try {
-      const booking = await Booking.find().populate('room')
-      if(!booking){
-        return res.status(400).json({message:"no booking for this user"})
-      }
-      return res.status(200).json({booking,message:"booking for user found"})
+    const booking = await Booking.find().populate("room").populate("user");
+    if (!booking) {
+      return res.status(400).json({ message: "no booking for this user" });
+    }
+    return res.status(200).json({ booking, message: "booking for user found" });
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log(error.message);
-     return
+    return;
   }
-  
-}
+};
+
+exports.updateBooking = async (req, res) => {
+  const { id, checkIn, checkOut, guests, totalAmount, status } = req.body;
+  try {
+    const booking = await Booking.findByIdAndUpdate(id, {
+      checkIn,
+      checkOut,
+      guests,
+      totalAmount,
+      status,
+    });
+    res
+      .status(200)
+      .json({ booking, message: "booking status updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log(error);
+  }
+};

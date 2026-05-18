@@ -11,7 +11,7 @@ export default function CartProvider({ children }) {
   const fetchCart = async () => {
     const res = await api.get("/cart/getcart");
     setCart(res.data.cart);
-    console.log(res.data);
+    // console.log(res.data);
   };
   const addToCart = async (productsId) => {
     try {

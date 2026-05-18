@@ -6,7 +6,7 @@ import Navbar from "../navbar/Navbar";
 
 export default function Booking (){
 
-    const [booking,setbooking]= useState({})
+    const [booking,setbooking]= useState([])
     
     const fetchBooking = async () => {
         try {
@@ -27,7 +27,7 @@ export default function Booking (){
         <>
         <Navbar/>
        <h1> this is a booking page  </h1> 
-       {Object.keys(booking).length == 0 && <div>no bookings for you yet</div>}    
+       {/* {Object.keys(booking).length == 0 && <div>no bookings for you yet</div>}     */}
         </>
     )
 }
