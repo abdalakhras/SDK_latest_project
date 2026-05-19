@@ -9,6 +9,7 @@ const categoryRouter = require("./routers/categoryRouter");
 const cartRouter = require("./routers/cartRouter")
 const roomsRouter = require("./routers/roomsRouter")
 const bookingRouter = require("./routers/bookingRouter")
+const reviewsRouter = require("./routers/reviewsRouter")
 const { globalRateLimit } = require("./authMiddleWare/rateLimit.middleWare");
 const {
   globalErrorHandler,
@@ -37,6 +38,7 @@ app.use("/api/category", categoryRouter);
 app.use("/api/cart",cartRouter)
 app.use("/api/rooms",roomsRouter)
 app.use("/api/booking",bookingRouter)
+app.use("/api/reviews",reviewsRouter)
 
 app.use(notFound);
 app.use(globalErrorHandler);

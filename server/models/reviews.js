@@ -20,5 +20,5 @@ const reviewSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-const Rivew = mongoose.model("Review", reviewSchema);
-module.exports = Rivew;
+const Review = mongoose.model("Review", reviewSchema);
+module.exports = Review;
