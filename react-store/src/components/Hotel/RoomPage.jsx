@@ -64,7 +64,7 @@ export default function RoomPage() {
     try {
       const res = await api.get(`/reviews/getrevByid/${id}`);
       console.log(res.data);
-      setRivews(res.data.review);
+      setRivews(res.data.reviews);
     } catch (error) {
       if (error.response) {
         console.log(error.response.status);
