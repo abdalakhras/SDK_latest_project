@@ -33,7 +33,9 @@ export default function RoomPage() {
   const [checkIn, setCheckin] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [guests, setGuests] = useState(1);
+  const [reviews, setRivews] = useState([]);
 
+  const [value, setValue] = React.useState(3);
   //   console.log("checkIn",checkIn)
   //    console.log("checkIn to new date",new Date(checkIn))
   //   console.log("checkOut",checkOut)
@@ -50,15 +52,32 @@ export default function RoomPage() {
     try {
       const res = await api.get(`/rooms/findbyid/${id}`);
       console.log(res.data);
-      console.log(res.data.room);
+      // console.log(res.data.room);
       setRoom(res.data.room);
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  // view reviews :
+  const fetchReviews = async () => {
+    try {
+      const res = await api.get(`/reviews/getrevByid/${id}`);
+      console.log(res.data);
+      setRivews(res.data.review);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.status);
+        console.log(error.response.data);
+      } else {
+        console.log(error.message);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchroom();
+    fetchReviews();
   }, []);
 
   // post the booking
@@ -114,6 +133,25 @@ export default function RoomPage() {
         ))}
       </ImageList>
       <div>{room?.discription}</div>
+      <br />
+      <br />
+      {/* review of this room */}
+      {reviews
+        ?.filter((review) => review.status === "Approved")
+        .map((review) => (
+          <ul key={review._id}>
+            <li>reviews : {review.content}</li>
+            <li>reviewer : {review.user?.username}</li>
+            <li>
+              <Box sx={{ "& > legend": { mt: 2 } }}>
+                <Typography component="legend">Rating</Typography>
+                <Rating name="read-only" value={review.rating} readOnly />
+              </Box>
+            </li>
+          </ul>
+        ))}
+
+      <br />
       <br />
       {/* booking the room */}
       <h3>book this room</h3>

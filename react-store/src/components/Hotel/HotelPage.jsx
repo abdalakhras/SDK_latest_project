@@ -152,6 +152,8 @@ export default function HotelPage() {
           ))}
         </Grid>
       </Box>
+      {/* reviews */}
+      
     </>
   );
 }

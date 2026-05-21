@@ -28,9 +28,7 @@ exports.createRivew = async (req, res) => {
 };
 exports.getReviews = async (req, res) => {
   try {
-    const reviews = await Review.find()
-      .populate("room")
-      .populate("user");
+    const reviews = await Review.find().populate("room").populate("user");
     res.status(200).json({ reviews, count: reviews.length });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -39,18 +37,22 @@ exports.getReviews = async (req, res) => {
 };
 
 exports.getReviewById = async (req, res) => {
-    const id = req.params.id  // the id is for the review , not for the user !!
+  const id = req.params.id; // the id is for the room , not for the user !!
   try {
-    const review = await Review.findById(id).populate("room").populate("user");
+    const reviews = await Review.find({ room: id })
+      .populate("room")
+      .populate("user");
 
-    if (!review) {
-      return res.status(404).json({message: "Review not found for user"})
+    if (!reviews) {
+      return res.status(404).json({ message: "Review not found for user" });
     }
-
-    res.status(200).json({review,message:"review found"});
+    if (reviews.length <= 0) {
+      return res.status(401).json({ message: "no body made a review" });
+    }
+    res.status(200).json({ reviews, message: "review found" });
   } catch (error) {
-    res.status(500).json({message: error.message});
-    console.log(error.message)
+    res.status(500).json({ message: error.message });
+    console.log(error.message);
   }
 };
 
@@ -59,27 +61,33 @@ exports.deleteReview = async (req, res) => {
     const review = await Review.findByIdAndDelete(req.params.id);
 
     if (!review) {
-      return res.status(404).json({message: "Review not found"});
+      return res.status(404).json({ message: "Review not found" });
     }
-    res.status(200).json({message: "Review deleted successfully"});
+    res.status(200).json({ message: "Review deleted successfully" });
   } catch (error) {
-    res.status(500).json({message: error.message});
-    console.log(error.message)
+    res.status(500).json({ message: error.message });
+    console.log(error.message);
   }
 };
 
 exports.updateReviewStatus = async (req, res) => {
-    const{id,status}=req.body
+  const { id, status } = req.body;
   try {
-    const review = await Review.findByIdAndUpdate(id,{status},{ new: true})
+    const review = await Review.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true },
+    );
 
     if (!review) {
-      return res.status(404).json({message: "Review not found"});
+      return res.status(404).json({ message: "Review not found" });
     }
 
-    res.status(200).json({message: "Review status changed successfully",review});
+    res
+      .status(200)
+      .json({ message: "Review status changed successfully", review });
   } catch (error) {
-    res.status(500).json({message: error.message});
-    console.log(error.message)
+    res.status(500).json({ message: error.message });
+    console.log(error.message);
   }
 };
