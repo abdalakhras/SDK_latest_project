@@ -7,7 +7,7 @@ import {
   Rating,
   Box,
 } from "@mui/material";
-
+import Modal from '@mui/material/Modal';
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -27,6 +27,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import taost, { toast } from "react-hot-toast";
+
+
 
 export default function RoomPage() {
   const navigate = useNavigate();
