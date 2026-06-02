@@ -43,7 +43,7 @@ exports.getBookings = async (req, res) => {
   try {
     const booking = await Booking.find({ user: user }).populate("room");
     if (!booking || booking.length === 0) {
-      return res.status(400).json({ message: "no booking for this user" });
+      return res.status(400).json({ message: "no booking for this user" }); 
     }
     return res.status(200).json({ booking, message: "booking for user found" });
   } catch (error) {

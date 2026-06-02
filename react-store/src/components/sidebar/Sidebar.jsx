@@ -45,7 +45,7 @@ export default function Sidebar({ open, onClose }) {
           </ListItem>
         ))}
       </List>
-      <Divider />
+      {/* <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -57,7 +57,7 @@ export default function Sidebar({ open, onClose }) {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </Box>
   );
 

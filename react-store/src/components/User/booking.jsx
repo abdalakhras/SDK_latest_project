@@ -35,7 +35,12 @@ export default function Booking() {
       setbooking(res.data.booking);
       toast.success("booking fetched successfully");
     } catch (error) {
-      console.log(error.message);
+  if (error.response) {
+        console.log(error.response.status);
+        console.log(error.response.data);
+      } else {
+        console.log(error.message);
+      }
     }
   };
 
@@ -70,6 +75,9 @@ export default function Booking() {
       <br />
       <br />
       {/* showing bookings */}
+      {booking.length===0 &&(
+        <h2>no booking for this user</h2>
+      )}
       {booking.map((item) => (
         <ul key={item._id}>
           {item.room?.images?.map((image, index) => (

@@ -21,6 +21,7 @@ import RoomPage from "./components/Hotel/RoomPage.jsx";
 import Bookings from "./components/Admin/Bookings.jsx";
 import Booking from "./components/User/booking.jsx";
 import Rooms from "./components/Admin/Rooms.jsx";
+import Reviews from "./components/Admin/Reviews.jsx";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/categories" element={<Categories/>}/>
         <Route path="/bookings" element={<Bookings/>}/>
         <Route path="/adminRooms" element={<Rooms/>}/>
+        <Route path="/adminReviews" element={<Reviews/>}/>
         
         </Route>
 

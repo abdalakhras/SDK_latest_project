@@ -26,7 +26,7 @@ const {login} = useAuth()
       login(data)
       data.user.role === 'user'? navigate("/hotelpage") 
       :data.user.role === 'Admin' ? navigate('/profile')
-      :data.user.role === 'trader' ? navigate('/home')
+      :data.user.role === 'manager' ? navigate('/profile')
       :navigate('/login')
     
      
