@@ -6,7 +6,7 @@ export const SidebarConfig = {
     ],
     Admin:[
         // {label:'products',path:'/adminProducts'},
-        //  {label:'users',path:'/users'},
+         {label:'users',path:'/users'},
         //  {label:'categories',path:'/categories'},
           {label:'hotel',path:'/hotelpage'},
            {label:'Ur booking',path:'/booking'},
@@ -16,6 +16,7 @@ export const SidebarConfig = {
 
     ],
     manager:[
+            {label:'users',path:'/users'},
           {label:'hotel',path:'/hotelpage'},
            {label:'Ur booking',path:'/booking'},
          {label:'Bookings',path:'/bookings'},
